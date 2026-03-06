@@ -1,0 +1,1 @@
+{"root":["./src/db.ts","./src/index.ts","./src/schema/admin.ts","./src/schema/student.ts","./src/schema/teacher.ts"],"version":"5.9.3"}
