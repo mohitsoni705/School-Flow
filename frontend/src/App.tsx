@@ -6,12 +6,14 @@ import { Statscard } from "./components/ui/StatsCard"
 import { FeatureCards } from "./components/ui/FeaturesCard"
 import { ReviewCard } from "./components/ui/ReviewsCard"
 import { Navbar } from "./components/navbar"
+import { TeacherPortal } from "./pages/TeacherPortal"
 
 const App = () => {
   return (
     <>
     <BrowserRouter>
-    <Home/>
+    {/* <Home/> */}
+    <TeacherPortal/>
     </BrowserRouter>
     </>
   )
