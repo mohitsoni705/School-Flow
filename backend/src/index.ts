@@ -3,9 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { connectDB } from "./db.js";
 import jwt from "jsonwebtoken";
-import { studentModel } from "./schema/student.js";
-import { teacherModel } from "./schema/teacher.js";
-import { adminModel } from "./schema/admin.js";
+import { userModel } from "./schema/userSchema.js";
 
 const app = express();
 app.use(express.json());
@@ -14,13 +12,18 @@ connectDB();
 
 app.post(("/student/signup"),async(req,res)=>{
     const {username , password} = req.body;
-    const existingUser = await studentModel.findOne({username});
+    const user ={
+        username:username,
+        password:password,
+        userType:"student"
+    }
+    const existingUser = await userModel.findOne({username});
     if(existingUser){
         res.status(411).json({
             message:"user already exist"
         })
     }else{
-        studentModel.create({username,password});
+        userModel.create(user);
         res.json({
             message:"user created"
         })
@@ -28,7 +31,7 @@ app.post(("/student/signup"),async(req,res)=>{
 });
 app.post(("/student/login"),async(req,res)=>{
     const {username , password} = req.body;
-    const checkUser = await studentModel.findOne({username,password});
+    const checkUser = await userModel.findOne({username,password});
     if(checkUser){
         const token = jwt.sign({username},"shh");
         res.json({
@@ -43,7 +46,7 @@ app.post(("/student/login"),async(req,res)=>{
 });
 app.post(("/teacher/login"),async(req,res)=>{
     const {username , password} = req.body;
-    const checkUser = await teacherModel.findOne({username,password});
+    const checkUser = await userModel.findOne({username,password});
     if(checkUser){
         const token = jwt.sign({username},"shh");
         res.json({
@@ -58,7 +61,7 @@ app.post(("/teacher/login"),async(req,res)=>{
 });
 app.post(("/admin/login"),async(req,res)=>{
     const {username , password} = req.body;
-    const checkUser = await adminModel.findOne({username,password});
+    const checkUser = await userModel.findOne({username,password});
     if(checkUser){
         const token = jwt.sign({username},"shh");
         res.json({
@@ -73,13 +76,18 @@ app.post(("/admin/login"),async(req,res)=>{
 });
 app.post(("/teacher/signup"),async(req,res)=>{
     const {username , password} = req.body;
-    const existingUser = await teacherModel.findOne({username});
+    const existingUser = await userModel.findOne({username});
+    const user ={
+        username:username,
+        password:password,
+        userType:"teacher"
+    }
     if(existingUser){
         res.status(411).json({
             message:"user already exist"
         })
     }else{
-        teacherModel.create({username,password});
+        userModel.create(user);
         res.json({
             message:"user has been created"
         })
@@ -88,11 +96,16 @@ app.post(("/teacher/signup"),async(req,res)=>{
 });
 app.post(("/admin/signup"),async(req,res)=>{
     const {username , password} = req.body;
-    const existingUser = await adminModel.find({username});
+    const existingUser = await userModel.find({username});
+    const user ={
+        username:username,
+        password:password,
+        userType:"admin"
+    }
     if(!existingUser){
-        adminModel.create({username,password});
+        userModel.create(user);
         res.json({
-            message:"user created";
+            message:"user created"
         })
     }else{
         res.status(411).json({
