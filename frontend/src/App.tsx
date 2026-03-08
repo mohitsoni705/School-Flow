@@ -5,15 +5,14 @@ import { RightArrow } from "./icon/rightArrow"
 import { Statscard } from "./components/ui/StatsCard"
 import { FeatureCards } from "./components/ui/FeaturesCard"
 import { ReviewCard } from "./components/ui/ReviewsCard"
+import { Navbar } from "./components/navbar"
 
 const App = () => {
   return (
     <>
-    {/* <Button text="Admin portal" variant="orange" endIcon={<RightArrow/>}/>
-    <Button text="Student portal" variant="green" endIcon={<RightArrow/>}/>
-    <Button text="Teacher portal" variant="yellow" endIcon={<RightArrow/>}/> */}
-    {/* <FeatureCards  icon={<RightArrow size="sm"/>} headText="Student Management" insideText="Comprehensive student profiles, enrollment tracking, academic records, and parent communication tools in one place."/> */}
-    <ReviewCard reviewText="SchoolFlow has significantly improved our administrative efficiency. The student enrollment and fee collection processes are now much more streamlined." person="Dr. Sarah Johnson" profession="Principal, Sunrise Academy"  />
+    <BrowserRouter>
+    <Home/>
+    </BrowserRouter>
     </>
   )
 }
